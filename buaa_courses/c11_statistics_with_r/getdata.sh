@@ -23,6 +23,7 @@ DATE_END="2016-11-21"  # 结束日期（一般写昨天的日期，因为当天�
 # 数据存放目录
 DATA_ORIG_DIR=01_data_orig
 DATA_FILTER_DIR=02_data_filter
+DATA_RESULT_DIR=03_data_result
 
 # 获取10月份和11月份数据
 if [ ! -e ${DATA_ORIG_DIR} ]; then
@@ -58,4 +59,19 @@ if [ ! -e ${DATA_FILTER_DIR} ]; then
     done
 else
     echo "Directory ${DATA_FILTER_DIR} is already exist!"
+fi
+
+# 将处理后的数据合并成一个文件
+if [ ! -e ${DATA_RESULT_DIR} ]; then
+    mkdir -p ${DATA_RESULT_DIR}
+    start=${DATE_START}
+    end=`date -d "1 day ${DATE_END}" +%Y-%m-%d`  # 日期自增
+    while [[ ${start} < ${end} ]]
+    do
+        cat ${DATA_FILTER_DIR}/${start}.total >> ${DATA_RESULT_DIR}/airdata.total
+        start=`date -d "1 day ${start}" +%Y-%m-%d`  # 日期自增
+    done
+    echo "OK"
+else
+    echo "Directory ${DATA_RESULT_DIR} is already exist!"
 fi
