@@ -18,7 +18,7 @@
 
 while read LINE; do
     LINE=`echo $LINE | tr '[A-Z]' '[a-z]'`
-    LINE=`echo $LINE | sed -r 's/([\,\.\!\?\$\-]|’s|’re|’ve|’d|’m|’t|’ll|y’|’|…|“|”|‘)/ /g'`
+    LINE=`echo $LINE | sed -r 's/([\,\.\!\?\$\-]|’s|’re|’ve|’d|’m|n’t|’t|’ll|y’|’|…|“|”|‘)/ /g'`
     for word in $LINE; do
         echo "$word 1"
     done
