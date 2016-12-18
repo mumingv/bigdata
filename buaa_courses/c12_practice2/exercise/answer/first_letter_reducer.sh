@@ -13,16 +13,24 @@
 # 重要说明：该脚本的输入要求输入数据已经做好了排序。
 
 count=0
-word=""
+totallength=0  # 相同首字母的单词总长度
+letter=""
 while read LINE; do
-  newword=`echo $LINE | cut -d ' '  -f 1`
-  if [[ $newword != $word ]];then
-    [ $count -ne 0 ] && echo -e "$word\t$count"
-    word=$newword
-    count=1
-    started=1
-  else
-    count=$(( $count + 1 ))
-  fi
+    newletter=`echo $LINE | cut -d ' '  -f 1`
+    length=`echo $LINE | cut -d ' '  -f 2`
+    if [[ $newletter != $letter ]]; then
+        if [[ $count -ne 0 ]]; then
+            averagelength=`echo "scale=2;$totallength/$count" | bc`
+            echo -e "$letter\t$count\t$averagelength"
+        fi
+        letter=$newletter
+        count=1
+        started=1
+        totallength=$length
+    else
+        count=$(( $count + 1 ))
+        totallength=$(( $totallength + $length ))
+    fi
 done
-echo -e "$word\t$count"
+averagelength=`echo "scale=2;$totallength/$count" | bc`
+echo -e "$letter\t$count\t$averagelength"  # 输出：单词首字母 单词数量 单词平均长度
