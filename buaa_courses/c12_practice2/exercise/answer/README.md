@@ -63,4 +63,12 @@ $ cd $HADOOP_HOME
 $ sh run_first_letter.sh
 ```
 
+## 查看运行结果
+
+运行脚本执行完成后，统计结果存放在如下目录。
+
+```
+$HADOOP_HOME/hdfs_output/output
+```
+
 
